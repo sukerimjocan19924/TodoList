@@ -7,7 +7,7 @@
 .TodoList input {
     padding: 15px;
     border: none;
-    border: 1px solid #cfcfcf;
+    border-bottom: 1px solid #cfcfcf;
 }
 
 .todo_wrapper {

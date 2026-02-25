@@ -1,24 +1,23 @@
-import React, {useState} from 'react'
+import React, {useState, useMemo} from 'react'
 import TodoItem from './TodoItem'
 import "./styles/TodoList.css"
+import { useTodoStore } from '../contexts/TodoContext'
 
-
-const TodoList = ({todos, onUpdate, onDelete}) => {
+const TodoList = () => {
+    const {todos} = useTodoStore()
     const [search, setSearch] = useState('')
+
+    const filteredTodos = useMemo(() => {
+        if (!search.trim()) return todos
+        const q = search.toLowerCase()
+
+        return todos.filter((t) => t.content.toLowerCase().includes(q))
+    }, [todos, search])
+
     const onChangeSearch = (e) => {
-        setSearch(e.target.value)
+            setSearch(e.target.value)
     }
 
-    const getFilteredData = () => {
-        if (search === '') {
-            return todos
-        }
-        return todos.filter((todo) => 
-            todo.content.toLowerCase().includes(search.toLowerCase())
-        )
-    }
-
-    const filteredTodos = getFilteredData()
   return (
     <div className='TodoList'>
         <h4>Todo List 🌱</h4>
@@ -31,9 +30,7 @@ const TodoList = ({todos, onUpdate, onDelete}) => {
             {filteredTodos.map((todo) => (
                 <TodoItem
                     key={todo.id}
-                    {...todo}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete} />
+                    {...todo} />
             ))}
         </div>
     </div>

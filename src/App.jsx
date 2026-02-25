@@ -14,13 +14,13 @@ const mockDate = [
   {
     id: 1,
     isDone: false,
-    content: '빨래하기',
+    content: '프로젝트 배포하기',
     date: new Date().getTime()
   },
   {
     id: 2,
     isDone: false,
-    content: '노래연습하기',
+    content: '컨디션 조절하기',
     date: new Date().getTime()
   }
 ]

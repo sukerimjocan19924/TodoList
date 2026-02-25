@@ -29,11 +29,6 @@ function App() {
   const [todos, setTodos] = useState(mockDate)
   const idRef = useRef(3)
 
-  const onUpdate = (targetId) => {
-    setTodos(todos.map((todo) =>
-      todo.id === targetId ? {...todo, isDone: !todo.isDone} : todo))
-  }
-
   const onCreate = (content) => {
     const newTodo = {
       id: idRef.current++,
@@ -42,15 +37,17 @@ function App() {
       date: new Date().getTime()
     }
 
-    setTodos([newTodo,...todos])
+    setTodos([newTodo, ...todos])
   }
 
-  
+  const onUpdate = (targetId) => {
+    setTodos(todos.map((todo) =>
+      todo.id === targetId ? {...todo, isDone: !todo.isDone} : todo))
+  }
 
   const onDelete = (targetId) => {
-    setTodos(todos.filter((todo) => todo.id !== targetId)); // targetId와 일치하는 항목 제외
-  };
-
+    setTodos(todos.filter((todo) => todo.id !== targetId))
+  }
 
   return (
     <div className='App'>

@@ -1,0 +1,64 @@
+import { useState, useRef } from 'react'
+import './App.css'
+import Header from './components/Header'
+import TodoEditor from './components/TodoEditor'
+import TodoList from './components/TodoList'
+
+const mockDate = [
+  {
+    id: 0,
+    isDone: false,
+    content: 'react 공부하기',
+    date: new Date().getTime()
+  },
+  {
+    id: 1,
+    isDone: false,
+    content: '프로젝트 배포하기',
+    date: new Date().getTime()
+  },
+  {
+    id: 2,
+    isDone: false,
+    content: '컨디션 조절하기',
+    date: new Date().getTime()
+  }
+]
+
+function App() {
+  const [todos, setTodos] = useState(mockDate)
+  const idRef = useRef(3)
+
+  const onUpdate = (targetId) => {
+    setTodos(todos.map((todo) =>
+      todo.id === targetId ? {...todo, isDone: !todo.isDone} : todo))
+  }
+
+  const onCreate = (content) => {
+    const newTodo = {
+      id: idRef.current++,
+      isDone: false,
+      content: content,
+      date: new Date().getTime()
+    }
+
+    setTodos([newTodo,...todos])
+  }
+
+  
+
+  const onDelete = (targetId) => {
+    setTodos(todos.filter((todo) => todo.id !== targetId)); // targetId와 일치하는 항목 제외
+  };
+
+
+  return (
+    <div className='App'>
+      <Header/>
+      <TodoEditor onCreate={onCreate}/>
+      <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete}/>
+    </div>
+  )
+}
+
+export default App
